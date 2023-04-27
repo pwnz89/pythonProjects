@@ -1,5 +1,7 @@
 # pythonProjects
 all my projects completed or to be
 
-project scrapeindeed is my try to scrape indeed.de site
+scrapeindeed - completed project for scraping indeed site
+pobierator - next project for downloading youtube videos and mp3s with gui
+
 
