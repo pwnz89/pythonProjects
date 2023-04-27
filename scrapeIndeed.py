@@ -100,9 +100,10 @@ driver.close()
 q1 = 'python'
 q2 = 'developer'
 q3 = 'data'
-
+qn = 'senior'
 for (a, b) in zip(listOfLinks, listOfNames):
     l = b.lower()
     # print(b,'link:','indeed.com'+a,'\n\n')
     if q1 in l or q2 in l or q3 in l:
-        print(b,'link:','indeed.com'+a,'\n\n')
+        if qn not in l:
+            print(b,'link:','indeed.com'+a,'\n\n')
