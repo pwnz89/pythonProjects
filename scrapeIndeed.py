@@ -82,13 +82,11 @@ def findAllPages():
 #to initialize whole code 
 basicDataRetriever()
 findAllPages()
-print('biga',BigA,'count', count)
 
 #repeats code until last page scrapped 
-if BigA > count:
+while BigA > count:
     findAllPages()  
     basicDataRetriever()
-    print('biga',BigA,'count', count)
 
 
     
@@ -99,6 +97,12 @@ driver.close()
 
 #list of all job offers
 #filtering available
+q1 = 'python'
+q2 = 'developer'
+q3 = 'data'
 
-# for (a, b) in zip(listOfLinks, listOfNames):
-#     print(b,'link:','indeed.com'+a,'\n\n')
+for (a, b) in zip(listOfLinks, listOfNames):
+    l = b.lower()
+    # print(b,'link:','indeed.com'+a,'\n\n')
+    if q1 in l or q2 in l or q3 in l:
+        print(b,'link:','indeed.com'+a,'\n\n')
