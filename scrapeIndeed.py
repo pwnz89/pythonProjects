@@ -23,19 +23,27 @@ driver = webdriver.Chrome(options=options, service=service)
 
 listOfNames=[]
 listOfLinks =[]
-global url
-url = 'https://de.indeed.com/Jobs?q=python&l=k%C3%B6ln&lang=en&vjk=f05a54abaec843a0'
+URL = 'https://de.indeed.com/Jobs?q=python&l=k%C3%B6ln&lang=en&vjk=f05a54abaec843a0'
+
+
 count = 0
-#var for next page
-y = 10
+y = 0
+
 def basicDataRetriever():
-    global url
     global y 
+    global url
     global count
     global soup
     
     #resets url to basic form(so addon wont repeat as[&start=10&start=20..30])
-    url = url
+    url = URL
+    #changes url as simple way for going to next page
+    y = y+10
+    addon = '&start='+str(y)
+    url = url+addon
+    count = count + 1
+
+
     #goes to site
     driver.get(url)
     time.sleep(3)
@@ -44,7 +52,6 @@ def basicDataRetriever():
     #parses page source
     soup = BeautifulSoup(pageSource, 'html.parser')
     
-
     #searches for all li elements
     for box in soup.find_all('li'):
         #searches for h2's with specified class
@@ -54,12 +61,10 @@ def basicDataRetriever():
             for link in piece.find_all('a', href=True):
                 listOfLinks.append(link['href'])
         
-    #changes url as simple way for going to next page
-    addon = '&start='+str(y)
-    url = url+addon
-    y = y+10
-    count = count + 1
+    print('conut', count)
     return soup
+    return url
+
 
 
 
@@ -67,29 +72,28 @@ BigA = 0
 
 #this should find how many pages there is and use number for x times to repeat code
 def findAllPages():
-    soup = basicDataRetriever()
-    #
+    global BigA
+
     #but this line blows
     #
-    for thisDiv in soup.find_element('nav', class_="css-jbuxu0"):
+    for thisDiv in soup.find_all('nav', class_="css-jbuxu0"):
         for everyA in thisDiv.find_all('a'):
-            everyA = everyA.text
-            everyA = int(everyA)
-            if everyA.text > BIgA:
-                BigA = everyA
-                print(bigA)
+            if len(everyA.text) > 0:
+                everyA = int(everyA.text)
+                if everyA > BigA:
+                    BigA = everyA
+                    print('biga',BigA)
 
-
-
-
-
+basicDataRetriever()
 findAllPages()
 
 #repeats code until last page scrapped
-print('first link:', url)
-for numberA in range(BigA):
+if BigA > count:
     basicDataRetriever()
-    print('another link:', url)
+    findAllPages()  
+
+
+    
 
 
 
@@ -97,5 +101,6 @@ driver.close()
 
 #list of all job offers
 #filtering available
-for (a, b) in zip(listOfLinks, listOfNames):
-    print(b,'link:','indeed.com'+a,'\n\n')
+
+# for (a, b) in zip(listOfLinks, listOfNames):
+#     print(b,'link:','indeed.com'+a,'\n\n')
