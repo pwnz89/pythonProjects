@@ -61,7 +61,6 @@ def basicDataRetriever():
             for link in piece.find_all('a', href=True):
                 listOfLinks.append(link['href'])
         
-    print('conut', count)
     return soup
     return url
 
@@ -73,24 +72,23 @@ BigA = 0
 #this should find how many pages there is and use number for x times to repeat code
 def findAllPages():
     global BigA
-
-    #but this line blows
-    #
     for thisDiv in soup.find_all('nav', class_="css-jbuxu0"):
         for everyA in thisDiv.find_all('a'):
             if len(everyA.text) > 0:
                 everyA = int(everyA.text)
                 if everyA > BigA:
                     BigA = everyA
-                    print('biga',BigA)
-
+                   
+#to initialize whole code 
 basicDataRetriever()
 findAllPages()
+print('biga',BigA,'count', count)
 
-#repeats code until last page scrapped
+#repeats code until last page scrapped 
 if BigA > count:
-    basicDataRetriever()
     findAllPages()  
+    basicDataRetriever()
+    print('biga',BigA,'count', count)
 
 
     
