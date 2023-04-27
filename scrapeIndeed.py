@@ -73,7 +73,9 @@ def findAllPages():
     #
     for thisDiv in soup.find_element('nav', class_="css-jbuxu0"):
         for everyA in thisDiv.find_all('a'):
-            if everyA > BIgA:
+            everyA = everyA.text
+            everyA = int(everyA)
+            if everyA.text > BIgA:
                 BigA = everyA
                 print(bigA)
 
